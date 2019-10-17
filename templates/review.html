@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}Review Submission{% endblock %}
+
+{% block main %}
+{% for book in books %}
+<h2>Review Submission</h2>
+<h5>{{ username }}'s review of {{ book }}</h5>
+
+{% if error %}
+<p class="alert alert-warning" id="searchFail"> <strong>Error: </strong>{{error}}</p>
+{% endif %}
+
+<form action="/reviewsubmission" method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col">
+                <label for="bookName">Name</label>
+                <input class="form-control form-control-lg" id="bookName" type="text" name="name" value="{{ book }}" readonly>
+            </div>
+            <div class="col">
+                <label for="author">Author</label>
+                <input class="form-control form-control-lg" id="author" type="text" name="author" value="{{ books[book]['author'] }}" readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <label for="reviewText">Review</label>
+            <textarea class="form-control" id="reviewText" name="review" rows="5" placeholder="Start your review here!">{{ books[book]['review'] }}</textarea>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="rate" id="starRate">
+                <!--https://codepen.io/tammykimkim/pen/yegZRw-->
+
+                <input type="radio" id="star5" name="rate" value="5" />
+                <label for="star5" title="text">5 stars</label>
+                <input type="radio" id="star4" name="rate" value="4" />
+                <label for="star4" title="text">4 stars</label>
+                <input type="radio" id="star3" name="rate" value="3" />
+                <label for="star3" title="text">3 stars</label>
+                <input type="radio" id="star2" name="rate" value="2" />
+                <label for="star2" title="text">2 stars</label>
+                <input type="radio" id="star1" name="rate" value="1" />
+                <label for="star1" title="text">1 star</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-row justify-content-center">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit Review
+            <i class="material-icons right">mode_edit</i>
+        </button>
+    </div>
+    <input type="text" class="hide" name="books" value="{{books}}">
+</form>
+
+{% endfor %}
+
+<script>
+        $(function() {
+            $(document).on('click keyup', function() {
+                $("#searchFail").hide()
+            })
+        })
+</script>
+{% endblock %}

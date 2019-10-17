@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}Results{% endblock%}
+{% block main %}
+
+<h2 >Search Results:</h2>
+
+
+
+{% if books %}
+    {% for book in books %}
+    <ul id='classicSearch'><li><h6><a href="/bookpage?info={{ book }},{{ books[book]['author'] }},{{ books[book]['year'] }},{{ books[book]['isbn'] }},{{ books[book]['id'] }}">{{ book }}</a></h6><p>{{ books[book]['author'] }}; {{ books[book]['year'] }}</p></li></ul>
+    {% endfor %}
+{% else %}
+<p class="alert alert-warning" id="searchFail"> <strong>Error: </strong>Your search yielded no results</p>
+{% endif %}
+<form action="/" method="GET">
+    <button class="btn waves-effect waves-light" type="submit" name="action">New Search
+        <i class="material-icons right">send</i>
+    </button>
+</form>
+<script>
+M.toast({html: 'Click a title for more info!'})
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}register{% endblock %}
+{% block main %}
+<h2>Register</h2>
+{% if error %}
+<p class="alert alert-warning"> <strong>Error: </strong>{{error}}</p>
+{% endif %}
+<form action="/register" method="post">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" name="username" autofocus class="form-control" id="username" aria-describedby="username" placeholder="Enter Username">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+  </div>
+  <div class="form-group">
+        <label for="confirm">Password</label>
+        <input type="password" name="confirm" class="form-control" id="confirm" placeholder="Confirm Password">
+      </div>
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+{% endblock %}

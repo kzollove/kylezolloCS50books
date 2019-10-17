@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Log In{% endblock %}
+{% block main %}
+<h2>Login</h2>
+{% if error %}
+<p class="alert alert-warning"> <strong>Error: </strong>{{error}}</p>
+{% endif %}
+<form action="/login" method="post">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" name="username" class="form-control" id="username" aria-describedby="username" placeholder="Enter Username">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-primary">Log In</button>
+</form>
+
+{% endblock %}

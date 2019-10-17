@@ -1,0 +1,27 @@
+<nav class="nav-extended sticky-top" style="background-color: #a9c093; text-shadow: 1px 1px 3px brown">
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo">Friends/Books</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    {% if session.user_id %}
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+        </div>
+      </nav>
+    
+      <ul class="sidenav" id="mobile-demo">
+          <li><a href="/logout">Log Out</a></li>
+      </ul>
+    {% else %}
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/login">Log In</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="/login">Log In</a></li>
+        <li><a href="/register">Register</a></li>
+    </ul>
+    {% endif %}

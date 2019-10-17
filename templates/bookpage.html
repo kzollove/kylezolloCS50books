@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}{% for b in book %}{{ b }}{% endfor %}{% endblock %}
+
+{% block main %}
+
+
+ 
+    <div class="fluid-container">
+      <div class="row">
+        <div class="col col-sm-8">
+          <table>
+              {% for b in books %}
+  
+                    <thead>
+                      <tr><th>{{ b }}</th></tr>
+                    </thead>
+                    <tbody>
+                      {% if rates %}
+                      <td><h6><div>Average Rating: <strong>{{ rates[1] }}</strong>;</div><div>Total Ratings: <strong>{{ rates[0] }}</strong></div></h6></td>
+                      {% endif %}
+                    </tbody>
+
+                    <tbody>
+                        <tr><td><h6><label>Author</label></h6>{{ books[b]['author'] }}</td></tr>
+                        <tr><td><h6><label>Year</label></h6>{{ books[b]['year'] }}</td></tr>
+                        <tr><td><h6><label>ISBN</label></h6>{{ books[b]['isbn'] }}</td></tr>
+                    </tbody>
+  
+              {% endfor %} 
+  
+          </table>
+        </div>
+        
+        <div class="col col-sm-4" id="review-button">{% for book in books %}<a href="/reviewsubmission?info={{ book }},{{ books[book]['author'] }},{{ books[book]['year'] }},{{ books[book]['isbn'] }},{{ books[book]['id'] }}" class="waves-effect waves-light btn"><i class="material-icons right">mode_edit</i>Write a review!</a>{% endfor %}
+
+        </div>
+        <div class="col col-sm-4" id="review-button">
+            <a class="waves-effect waves-light btn" href="/"><i class="material-icons right">send</i>New Search</a>
+                
+        </div>
+      </div>
+
+    </div>
+
+
+{% endblock %}
+
