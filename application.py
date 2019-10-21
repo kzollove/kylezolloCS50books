@@ -29,16 +29,16 @@ db = scoped_session(sessionmaker(bind=engine))
 
 ####### SUB PROGRAMS ############
 #Queries database. Takes a dictionary of submitted parameters
-def booksearch(req):
+def booksearch(bookQuery):
     books = db.execute("""SELECT title, name, year, isbn, books.id
                                 FROM books
                                 JOIN authors
                                 ON books.author_id=authors.id
-                                WHERE LOWER(title) LIKE LOWER(:title)
-                                AND LOWER(name) LIKE LOWER(:name)
-                                AND isbn LIKE :isbn
+                                WHERE LOWER(title) LIKE LOWER(:book)
+                                OR LOWER(name) LIKE LOWER(:book)
+                                OR isbn LIKE :book
                                 """,
-                                {'title': '%' + req.get('title', '') + '%', 'name': '%' + req.get('author', '') + '%', 'isbn': '%' + req.get('isbn', '') + '%'}).fetchall()
+                                {'book': '%' + bookQuery + '%'}).fetchall()
     return books
 
 #Formats the list of tuples as a dictionary of 'title': {author, year} dictionaries
@@ -160,18 +160,11 @@ def search():
     #If an autocomplete query is submitted
     if request.method == "GET":
 
-        #This is the type of query (author, title, or isbn)
-        n = request.args.get("q").split(',')[1]
-
         #This is the value (Stephen King, The shining, 1234567)
-        q = request.args.get("q").split(',')[0]
-
-        #Adds to dict of queries
-        reqDict.update({n: q})
+        q = request.args.get("q")
 
         #If there are values in dict, queries db
-        if reqDict:
-            books = booksearch(reqDict)
+        books = booksearch(q)
 
         #Sends data back to view
         return jsonify(buildDict(books))
@@ -180,12 +173,10 @@ def search():
     if request.method == "POST":
 
         #if nothing submitted
-        if not (request.form.get('author') or request.form.get('title') or request.form.get('isbn')):
+        if not (request.form.get('book')):
             return render_template("index.html", error="Must submit atleast one search field")
-        
-        searchDict = {'title': request.form.get('title'), 'author': request.form.get('author'), 'isbn': request.form.get('isbn')}
 
-        books = booksearch(searchDict)
+        books = booksearch(request.form.get('book'))
 
         return render_template("results.html", books=buildDict(books))
        

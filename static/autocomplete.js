@@ -1,6 +1,6 @@
 //Pass text between autocomplete and submit fields
 $("input").keyup(function() {
-    $("input[name=" + $(this).attr('name') + "]").val($(this).val())
+    $("input").val($(this).val())
     M.updateTextFields();
 })
 //Show/hide autocomplete and submit based on checkbox
@@ -42,7 +42,7 @@ function debounce(func, wait, immediate) {
 function autoComp() {
 
         //Send value and name attr of input as single get request
-        $.get('/search?q=' + $(this).val() + ',' + $(this).attr('name'), function(data) {
+        $.get('/search?q=' + $(this).val(), function(data) {
             let html = ''
             const keys =  Object.keys(data)
             for (key of keys) {
