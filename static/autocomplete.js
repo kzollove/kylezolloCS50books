@@ -55,3 +55,8 @@ function autoComp() {
 //Fire autocomplete on keyup or when autcomplete is selected (second argument is search delay time)
 $("input").keyup(debounce(autoComp, 250))
 
+$("#autoCheck").click(function() {
+    if ($("#autoCheck").is(":checked") && $("input").val()) {
+        $("input").keyup(debounce(autoComp, 50))
+    }
+});

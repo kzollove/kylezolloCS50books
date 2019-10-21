@@ -160,11 +160,7 @@ def search():
     #If an autocomplete query is submitted
     if request.method == "GET":
 
-        #This is the value (Stephen King, The shining, 1234567)
-        q = request.args.get("q")
-
-        #If there are values in dict, queries db
-        books = booksearch(q)
+        books = booksearch(request.args.get("q"))
 
         #Sends data back to view
         return jsonify(buildDict(books))
